@@ -1,30 +1,31 @@
 <template>
+    <article class="flex flex-col gap-4">
 
-    <Panel header="Variables" :toggleable="true">
-        <section v-for="section in sections" :key="section.label">
-            <h1 v-if="section.label" class="text-xl py-8">{{ section.label }}</h1>
-            <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div v-for="item in section.items" :key="item.label" class="flex flex-col gap-2">
-                    <label :for="item.label">{{ item.label }}</label>
-                    <InputText :id="item.label" v-model="item.text" :aria-describedby="`${item.label}-help`" />
-                    <small v-if="item.description" :id="`${item.label}-help`">{{ item.description }}</small>
+        <Panel header="Variables" :toggleable="true">
+            <section v-for="section in sections" :key="section.label">
+                <h1 v-if="section.label" class="text-xl py-8">{{ section.label }}</h1>
+                <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div v-for="item in section.items" :key="item.label" class="flex flex-col gap-2">
+                        <label :for="item.label">{{ item.label }}</label>
+                        <InputText :id="item.label" v-model="item.text" :aria-describedby="`${item.label}-help`" />
+                        <small v-if="item.description" :id="`${item.label}-help`">{{ item.description }}</small>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </Panel>
+            </section>
+        </Panel>
 
+        <Panel header="LOD" :toggleable="true">
+            <template #icons>
+                <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
+            </template>
+            <pre class="overflow-auto"> {{ lodTemplate }} </pre>
+        </Panel>
 
+        <Panel header="Test your copied text" :toggleable="true">
+            <Textarea aria-label="Test your template" class="w-full h-screen" />
+        </Panel>
 
-    <Panel header="LOD" :toggleable="true">
-        <template #icons>
-            <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
-        </template>
-        <pre class="overflow-auto"> {{ lodTemplate }} </pre>
-    </Panel>
-
-    <Panel header="Test your copied text" :toggleable="true">
-        <Textarea aria-label="Test your template" class="w-full h-screen" />
-    </Panel>
+    </article>
 </template>
 
 <script setup lang="ts">
