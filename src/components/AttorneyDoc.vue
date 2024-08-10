@@ -221,21 +221,21 @@ Via:    ${getTextFromLabel(LabelText.DebtorAddress1)}
         ${getTextFromLabel(LabelText.DebtorAddress2)}
         ${getTextFromLabel(LabelText.DebtorAddress3)}
 
-Per Geregistreerde Pos / Per Registered Post																		
+Per Geregistreerde Pos / Per Registered Post
 
 Ons verw / our ref: P VENTER/${getTextFromLabel(LabelText.FileReference)}
 
-U verw / your ref: ${getTextFromLabel(LabelText.FileReference)}																					
+U verw / your ref: ${getTextFromLabel(LabelText.FileReference)}
 
-Dear Sir / Madam,																						
+Dear Sir / Madam,
 
-JACOBS FOURIE INC // ${getTextFromLabel(LabelText.DebtorName)}																						
+JACOBS FOURIE INC // ${getTextFromLabel(LabelText.DebtorName)}
 
-1.	We refer to the above mentioned matter and confirm we act herein on behalf of our client, JACOBS FOURIE INC.																					
+1. We refer to the above mentioned matter and confirm we act herein on behalf of our client, JACOBS FOURIE INC.
 
-2.	We have been instructed by our client to demand from you, as we hereby do, immediate payment of the sum of R${getTextFromLabel(LabelText.LodClaimAmount)} due to our client in respect of goods sold and delivered and/or services rendered at your special request and instance.																					
+2. We have been instructed by our client to demand from you, as we hereby do, immediate payment of the sum of R${getTextFromLabel(LabelText.LodClaimAmount)} due to our client in respect of goods sold and delivered and/or services rendered at your special request and instance.
 
-3.	Payment must be deposit into our bank account, namely:
+3. Payment must be deposit into our bank account, namely:
 
         JACOBS FOURIE ATTORNEYS TRUST ACCOUNT
         ABSA BANK
@@ -243,15 +243,15 @@ JACOBS FOURIE INC // ${getTextFromLabel(LabelText.DebtorName)}
         BRANCH CODE:  632005
         REF: ${getTextFromLabel(LabelText.FileReference)}
 
-4.	Kindly take note that payment must reach our offices within 7 (SEVEN) days from the date hereof failing which we shall proceed with Legal steps against you without further notice.																					
+4. Kindly take note that payment must reach our offices within 7 (SEVEN) days from the date hereof failing which we shall proceed with Legal steps against you without further notice.
 
-5.	We trust that the above mentioned actions may not be necessary and look forward to proof of payment of the account or reasonable settlement arrangements of the amount outstanding.																					
+5. We trust that the above mentioned actions may not be necessary and look forward to proof of payment of the account or reasonable settlement arrangements of the amount outstanding.
 
-Yours faithfully,																						
+Yours faithfully,
 
-PIERRE VENTER																						
-JACOBS FOURIE INC.																						
-info@jacobsfourie.co.za																						
+PIERRE VENTER
+JACOBS FOURIE INC.
+info@jacobsfourie.co.za
 `)
 
 function copyLod() {
