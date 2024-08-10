@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import Panel from 'primevue/panel';
+</script>
+
 <template>
     <div class="card">
         <Panel header="About">
@@ -7,7 +11,3 @@
         </Panel>
     </div>
 </template>
-
-<script setup>
-import Panel from 'primevue/panel';
-</script>
