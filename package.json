@@ -2,7 +2,7 @@
   "name": "docattorney",
   "homepage": "https://johanvaneck.github.io/docattorney",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite",
