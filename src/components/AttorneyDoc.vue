@@ -132,7 +132,7 @@ const sections = reactive<Array<{
     {
         label: 'File Reference',
         items: [
-            { label: LabelText.FileReference, text: '' },
+            { label: LabelText.FileReference, text: '[MY_UNIQUE_FILE_REFERENCE]' },
         ]
     },
     // {
@@ -150,11 +150,11 @@ const sections = reactive<Array<{
     {
         label: 'Debtor’s Details',
         items: [
-            { label: LabelText.DebtorName, text: '' },
+            { label: LabelText.DebtorName, text: '[MY_DEBTOR_NAME]' },
             // { label: LabelText.DebtorId, text: '' },
-            { label: LabelText.DebtorAddress1, text: '' },
-            // { label: LabelText.DebtorAddress2, text: '' },
-            // { label: LabelText.DebtorAddress3, text: '' },
+            { label: LabelText.DebtorAddress1, text: '[MY_DEBTOR_ADDRESS_LINE_1]' },
+            { label: LabelText.DebtorAddress2, text: '[MY_DEBTOR_ADDRESS_LINE_2]' },
+            { label: LabelText.DebtorAddress3, text: '[MY_DEBTOR_ADDRESS_LINE_3]' },
             // { label: LabelText.DebtorSpecifyAddress, text: '' },
             // { label: LabelText.DebtorEmail, text: '' },
         ],
@@ -174,7 +174,7 @@ const sections = reactive<Array<{
         label: 'Lod Details',
         items: [
             // { label: LabelText.LodCauseOfAction, text: '' },
-            { label: LabelText.LodClaimAmount, text: '' },
+            { label: LabelText.LodClaimAmount, text: '[MY_LOD_CLAIM_AMOUNT]' },
             // { label: LabelText.LodInterestRate, text: '' },
         ],
     },
@@ -207,14 +207,18 @@ function getTextFromLabel(label: LabelText) {
 }
 
 const lodTemplate = computed(() => `
-Aan / to: ${getTextFromLabel(LabelText.DebtorName)}												Datum / Date: ${new Date().toLocaleDateString()}						
+Aan / to: ${getTextFromLabel(LabelText.DebtorName)}
+Datum / Date: ${new Date().toLocaleDateString()}
 
-Via: ${getTextFromLabel(LabelText.DebtorAddress1)}, ${getTextFromLabel(LabelText.DebtorAddress2)}, ${getTextFromLabel(LabelText.DebtorAddress3)} 																		
+Via:    ${getTextFromLabel(LabelText.DebtorAddress1)}
+        ${getTextFromLabel(LabelText.DebtorAddress2)}
+        ${getTextFromLabel(LabelText.DebtorAddress3)}
 
 Per Geregistreerde Pos / Per Registered Post																		
 
-Ons verw / our ref:																						U verw / your ref:
-P VENTER/${getTextFromLabel(LabelText.FileReference)}																						
+Ons verw / our ref: P VENTER/${getTextFromLabel(LabelText.FileReference)}
+
+U verw / your ref: ${getTextFromLabel(LabelText.FileReference)}																					
 
 Dear Sir / Madam,																						
 
@@ -224,7 +228,13 @@ JACOBS FOURIE INC // ${getTextFromLabel(LabelText.DebtorName)}
 
 2.	We have been instructed by our client to demand from you, as we hereby do, immediate payment of the sum of R${getTextFromLabel(LabelText.LodClaimAmount)} due to our client in respect of goods sold and delivered and/or services rendered at your special request and instance.																					
 
-3.	Payment must be deposit into our bank account, namely: JACOBS FOURIE ATTORNEYS TRUST ACCOUNT, ABSA BANK, ACCOUNT NUMBER:  40-8047-4732, BRANCH CODE:  632005, REF: ${getTextFromLabel(LabelText.FileReference)}.																					
+3.	Payment must be deposit into our bank account, namely:
+
+        JACOBS FOURIE ATTORNEYS TRUST ACCOUNT
+        ABSA BANK
+        ACCOUNT NUMBER:  40-8047-4732
+        BRANCH CODE:  632005
+        REF: ${getTextFromLabel(LabelText.FileReference)}
 
 4.	Kindly take note that payment must reach our offices within 7 (SEVEN) days from the date hereof failing which we shall proceed with Legal steps against you without further notice.																					
 
