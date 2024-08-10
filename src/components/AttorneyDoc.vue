@@ -16,16 +16,22 @@
 
 
     <Panel header="LOD" :toggleable="true">
-        <pre class="overflow-auto">
-        {{ lodTemplate }}
-        </pre>
+        <template #icons>
+            <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
+        </template>
+        <pre class="overflow-auto"> {{ lodTemplate }} </pre>
     </Panel>
 
+    <Panel header="Test your copied text" :toggleable="true">
+        <Textarea aria-label="Test your template" class="w-full h-screen" />
+    </Panel>
 </template>
 
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
 import Panel from 'primevue/panel';
+import Button from 'primevue/button';
 import { computed, reactive } from 'vue';
 
 // FILE REFERENCE:
@@ -247,5 +253,7 @@ JACOBS FOURIE INC.
 info@jacobsfourie.co.za																						
 `)
 
-
+function copyLod() {
+    navigator.clipboard.writeText(lodTemplate.value);
+}
 </script>
