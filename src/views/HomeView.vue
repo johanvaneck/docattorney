@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import AttorneyDoc from '@/components/AttorneyDoc.vue';
+
+
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <AttorneyDoc />
   </main>
 </template>
