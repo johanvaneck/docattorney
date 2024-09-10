@@ -17,6 +17,7 @@
         <Panel header="LOD" :toggleable="true">
             <template #icons>
                 <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
+                <Button severity="secondary" rounded label="Generate PDF" @click="generatePdf()" />
             </template>
             <pre class="overflow-auto"> {{ lodTemplate }} </pre>
         </Panel>
@@ -24,7 +25,6 @@
         <Panel header="Test your copied text" :toggleable="true">
             <Textarea aria-label="Test your template" class="w-full h-screen" />
         </Panel>
-
     </article>
 </template>
 
@@ -34,6 +34,7 @@ import Textarea from 'primevue/textarea';
 import Panel from 'primevue/panel';
 import Button from 'primevue/button';
 import { computed, reactive } from 'vue';
+import { jsPDF } from 'jspdf';
 
 // FILE REFERENCE:
 
@@ -256,5 +257,23 @@ info@jacobsfourie.co.za
 
 function copyLod() {
     navigator.clipboard.writeText(lodTemplate.value);
+}
+
+function generatePdf() {
+    // Default export is a4 paper, portrait, using millimeters for units
+    const doc = new jsPDF();
+
+    const maxWidth = 180; // Maximum width of the text in mm
+    const fontSize = 12; // Desired font size
+
+    // Set the font size
+    doc.setFontSize(fontSize);
+
+    // Split text into lines that fit within the specified width
+    const lines = doc.splitTextToSize(lodTemplate.value, maxWidth);
+
+    // Add the lines to the PDF document
+    doc.text(lines, 10, 10);
+    doc.save("docattorney.pdf");
 }
 </script>
