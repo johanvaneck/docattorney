@@ -14,16 +14,15 @@
             </section>
         </Panel>
 
-        <Panel header="LOD" :toggleable="true">
-            <template #icons>
-                <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
-                <Button severity="secondary" rounded label="Generate PDF" @click="generatePdf()" />
-            </template>
-            <pre class="overflow-auto"> {{ lodTemplate }} </pre>
+        <Panel header="PDF Preview" :toggleable="true">
+            <iframe class="w-full h-screen" :src="currentPdf?.url ?? ''" frameborder="0"></iframe>
         </Panel>
 
-        <Panel header="Test your copied text" :toggleable="true">
-            <Textarea aria-label="Test your template" class="w-full h-screen" />
+        <Panel header="LOD Template" :toggleable="true">
+            <template #icons>
+                <Button severity="secondary" rounded label="Copy template" @click="copyLod" />
+            </template>
+            <pre class="overflow-auto"> {{ lodTemplate }} </pre>
         </Panel>
     </article>
 </template>
@@ -33,8 +32,9 @@ import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Panel from 'primevue/panel';
 import Button from 'primevue/button';
-import { computed, reactive } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { jsPDF } from 'jspdf';
+import logoUrl from '@/assets/image.png';
 
 // FILE REFERENCE:
 
@@ -129,6 +129,7 @@ enum LabelText {
     Sec65DateJudgmentGranted = 'Date Judgment Granted (DD/MM/YYYY)',
 }
 
+const currentPdf = ref<{ pdf: jsPDF, url: string }>();
 const sections = reactive<Array<{
     label?: string;
     items: Array<{
@@ -218,9 +219,10 @@ const lodTemplate = computed(() => `
 Aan / to: ${getTextFromLabel(LabelText.DebtorName)}
 Datum / Date: ${new Date().toLocaleDateString()}
 
-Via:    ${getTextFromLabel(LabelText.DebtorAddress1)}
-        ${getTextFromLabel(LabelText.DebtorAddress2)}
-        ${getTextFromLabel(LabelText.DebtorAddress3)}
+Via:   
+${getTextFromLabel(LabelText.DebtorAddress1)}
+${getTextFromLabel(LabelText.DebtorAddress2)}
+${getTextFromLabel(LabelText.DebtorAddress3)}
 
 Per Geregistreerde Pos / Per Registered Post
 
@@ -250,7 +252,7 @@ JACOBS FOURIE INC // ${getTextFromLabel(LabelText.DebtorName)}
 
 Yours faithfully,
 
-PIERRE VENTER
+PIERRE POKUREUR
 JACOBS FOURIE INC.
 info@jacobsfourie.co.za
 `)
@@ -269,11 +271,45 @@ function generatePdf() {
     // Set the font size
     doc.setFontSize(fontSize);
 
+    const padding = 10;
+    const s = 40;
+    const imgWidth = s;
+    const imgHeight = s;
+    // Add company logo
+    doc.addImage(logoUrl, 'PNG', (maxWidth - imgWidth + padding), padding, imgWidth, imgHeight); // Adjust the position and size as needed
+
     // Split text into lines that fit within the specified width
     const lines = doc.splitTextToSize(lodTemplate.value, maxWidth);
 
     // Add the lines to the PDF document
     doc.text(lines, 10, 10);
-    doc.save("docattorney.pdf");
+
+    // Revoke the object URL to free up memory
+    if (currentPdf.value?.url) {
+        URL.revokeObjectURL(currentPdf.value.url);
+    }
+    currentPdf.value = {
+        pdf: doc,
+        url: URL.createObjectURL(doc.output('blob')),
+    }
+    // doc.save("docattorney.pdf");
 }
+
+let timeout: number;
+function debounce(func: Function, wait: number = 1000) {
+    const later = () => {
+        clearTimeout(timeout);
+        func();
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+}
+
+watch(lodTemplate, () => {
+    debounce(generatePdf);
+});
+
+onMounted(() => {
+    debounce(generatePdf);
+});
 </script>
